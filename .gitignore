@@ -20,10 +20,8 @@ env/
 
 # Local vector stores and uploaded source files
 chroma_db/
-data/chroma/*
-!data/chroma/.gitkeep
-data/uploads/*
-!data/uploads/.gitkeep
+data/chroma/
+data/uploads/
 uploads/
 
 # Generated logs and temporary files
