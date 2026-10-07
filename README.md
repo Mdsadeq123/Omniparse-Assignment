@@ -53,6 +53,17 @@ Upload file
 | LLM and embeddings | OpenRouter with NVIDIA Nemotron models |
 | Configuration | Pydantic Settings, python-dotenv |
 
+### Version Bounds
+
+| Component | Supported version |
+| --- | --- |
+| Python | 3.11+ |
+| FastAPI | `>=0.115,<1.0` |
+| ChromaDB | `>=0.5,<2.0` |
+| LangChain | `>=0.3,<2.0` |
+| EasyOCR | `>=1.7,<2.0` |
+| PyPDF | `>=5.0,<7.0` |
+
 ## Requirements
 
 - Python 3.11 or newer
@@ -65,8 +76,8 @@ Upload file
 ### 1. Clone the project
 
 ```bash
-git clone https://github.com/Mdsadeq123/omniparse-multimodal-rag.git
-cd omniparse-multimodal-rag
+git clone https://github.com/Mdsadeq123/Omniparse-Assignment.git
+cd Omniparse-Assignment
 ```
 
 ### 2. Create a virtual environment
@@ -137,6 +148,26 @@ Open [http://localhost:8000](http://localhost:8000) in your browser.
 
 The health endpoint is available at [http://localhost:8000/health](http://localhost:8000/health).
 
+## Chunking Strategy
+
+OmniParse uses LangChain's **Recursive Character Text Splitter** with an 800-character chunk size and a 100-character overlap. The recursive strategy prefers natural boundaries such as paragraphs and lines before using smaller boundaries. This preserves semantic context at paragraph boundaries while avoiding abrupt truncation in complex tables, OCR output, and multi-line document structures. The overlap keeps nearby context available when an idea spans two chunks.
+
+## Vector DB & Embedding Model Choice
+
+**Vector database: ChromaDB.** ChromaDB provides lightweight, persistent local disk storage without an external cloud dependency for vector persistence. It also integrates directly with LangChain and supports metadata-backed similarity retrieval for filenames, document IDs, source types, and page numbers.
+
+**Embedding model: OpenRouter with NVIDIA Nemotron embeddings.** The application sends embeddings in batches through OpenRouter using NVIDIA Nemotron embedding models. This choice provides strong semantic matching across mixed-domain text and the extracted text produced by the multimodal pipeline, including PDF and OCR content.
+
+## Example Queries & Answer Themes
+
+The committed sample corpus in `docs/` provides material for the following test queries:
+
+1. **"What are the key findings or summary in Sadeq_Majid_Results.pdf?"** Expected theme: personality scores and the balance between practical and philosophical orientation.
+2. **"What is the recommended 7-day meal plan strategy for mothers?"** Expected theme: a daily high-protein dietary breakdown and repeatable meal-planning structure.
+3. **"Summarize the extracted text from the uploaded JPEG image."** Expected theme: OCR-extracted textual context from an indexed image.
+4. **"How does the system handle document chunking and metadata tracking?"** Expected theme: document IDs, page numbers, source metadata, and chunk counts.
+5. **"What is the capital of France?"** Expected theme: the out-of-scope refusal response, `No relevant information found in your documents.`
+
 ## Configuration
 
 | Variable | Description |
@@ -161,6 +192,10 @@ The health endpoint is available at [http://localhost:8000/health](http://localh
 - `data/chroma/`: local ChromaDB persistence.
 - `data/uploads/`: locally stored uploads.
 - `run.py`: application entry point.
+
+## Sample Documents
+
+The `docs/` directory contains five original, non-trivial sample documents for local indexing and demonstration. The corpus includes a PDF and four text documents, each containing at least 500 words of content. These files are committed to the repository and are not runtime uploads.
 
 ## Limitations
 
