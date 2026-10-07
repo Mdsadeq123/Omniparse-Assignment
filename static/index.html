@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OmniParse</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <header>
+    <h1>OmniParse</h1>
+    <p class="subtitle">Multimedia RAG engine — upload documents &amp; images, query with Nemotron 3 Super.</p>
+  </header>
+
+  <main class="layout">
+    <aside class="panel upload-panel">
+      <h2>Knowledge base</h2>
+
+      <div id="dropzone" class="dropzone">
+        <p>Drag &amp; drop files here</p>
+        <p class="hint">PDF, DOCX, TXT, MD, PNG, JPG, WEBP</p>
+        <input type="file" id="fileInput" multiple accept=".pdf,.docx,.txt,.md,.markdown,.png,.jpg,.jpeg,.webp,.gif,.bmp" />
+        <button type="button" id="browseBtn" class="btn secondary">Browse files</button>
+      </div>
+
+      <div id="uploadStatus" class="status hidden"></div>
+
+      <h3>Indexed documents</h3>
+      <ul id="docList" class="doc-list"></ul>
+    </aside>
+
+    <section class="panel chat-panel">
+      <h2>Chat</h2>
+      <div id="messages" class="messages"></div>
+      <form id="chatForm" class="chat-form">
+        <textarea id="chatInput" rows="2" placeholder="Ask a question about your files..." required></textarea>
+        <button type="submit" class="btn primary" id="sendBtn">Send</button>
+      </form>
+    </section>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
