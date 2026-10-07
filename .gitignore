@@ -1,0 +1,35 @@
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+
+# Python caches and tooling output
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments and package metadata
+.venv/
+.venv*/
+venv/
+env/
+*.egg-info/
+
+# Local vector stores and uploaded source files
+chroma_db/
+data/chroma/*
+!data/chroma/.gitkeep
+data/uploads/*
+!data/uploads/.gitkeep
+uploads/
+
+# Generated logs and temporary files
+*.log
+tmp/
+
+# Operating-system files
+.DS_Store
+Thumbs.db
