@@ -19,16 +19,22 @@ The browser interface displays each answer with the filename, page number, simil
 
 ## Architecture
 
-```text
-Upload file
-  -> PDF: PyPDF extraction
-  -> DOCX/TXT/Markdown: text extraction
-  -> Image: EasyOCR (+ optional vision caption)
-  -> Recursive chunking (800 characters, 100-character overlap)
-  -> OpenRouter embeddings (batched)
-  -> Persistent ChromaDB collection
-  -> Top-k similarity retrieval
-  -> Nemotron-powered answer + source citations
+```mermaid
+flowchart TD
+    A[User uploads a document or image] --> B{File type}
+    B -->|PDF| C[PyPDF text extraction]
+    B -->|DOCX, TXT, Markdown| D[Text extraction]
+    B -->|Image| E[EasyOCR text extraction]
+    E --> F[Optional vision caption]
+    C --> G[Recursive text chunking]
+    D --> G
+    F --> G
+    G --> H[Batch embedding via OpenRouter]
+    H --> I[(Persistent local ChromaDB)]
+    J[User question] --> K[Embed query and retrieve top-k chunks]
+    I --> K
+    K --> L[Nemotron grounded answer generation]
+    L --> M[Answer with filename, page citation, and source drawer]
 ```
 
 ### Workflow
